@@ -1,10 +1,16 @@
 const mongoose = require('mongoose');
 
 const permissions = [
-    "view",
-    "delete",
-    "edit",
-    "create"
+    "find-gadget-category",
+    "delete-gadget",
+    "update-gadget",
+    "create-gadget-category",
+    "add-specification-incategory",
+    "add-role",
+    "getall-role",
+    "getperticular-role",
+    "update-role",
+    "delete-role"
 ];
 
 const roleSchema = new mongoose.Schema({

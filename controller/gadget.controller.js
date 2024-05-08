@@ -227,7 +227,7 @@ const MobileController = {
     addGadgetCategory: async function (req, res) {
         try {
             const data = req.body;
-            const seller = req.seller;
+            // const seller = req.seller;
             if (!data.gadgetName) {
                 const response = { success: false, message: "Gadget name is required" };
                 return res.status(400).json(response);
@@ -239,7 +239,7 @@ const MobileController = {
             }
 
             let gadgetTypeId = findGadgetType._id;
-            let sellerId = seller._id;
+            // let sellerId = seller._id;
 
             let image = [];
 
@@ -249,7 +249,7 @@ const MobileController = {
 
             data.image = image;
 
-            const addCategory = new GadgetCategoryModel({ ...data, sellerId: sellerId, gadgetTypeId });
+            const addCategory = new GadgetCategoryModel({ ...data, gadgetTypeId });
             await addCategory.save();
 
 
@@ -724,7 +724,7 @@ const MobileController = {
         try {
             const id = req.body.id;
             const updates = req.body.field;
-            const seller = req.seller;
+            // const seller = req.seller;
 
             const findGadget = await GadgetCategoryModel.findOne({ _id: id });
             if (!findGadget) {
@@ -733,10 +733,10 @@ const MobileController = {
             }
 
            
-            if((findGadget.sellerId).toString() != (seller._id).toString()){
-                const response = { success: false, message: "You Not Eligable For Update" };
-                return res.status(400).json(response);
-            }
+            // if((findGadget.sellerId).toString() != (seller._id).toString()){
+            //     const response = { success: false, message: "You Not Eligable For Update" };
+            //     return res.status(400).json(response);
+            // }
 
             const specifications = findGadget.specifications;
 
@@ -771,18 +771,7 @@ const MobileController = {
                 }
             }
 
-            // if (value && keyvalue) {
-
-            //     fieldToUpdate.value = value;
-            //     fieldToUpdate.key = keyvalue;
-            // }
-            // else if (value) {
-            //     fieldToUpdate.value = value;
-            // }
-            // else if (keyvalue) {
-
-            //     fieldToUpdate.key = keyvalue;
-            // }
+            
 
             const updatedGadget = await findGadget.save();
 
@@ -796,7 +785,7 @@ const MobileController = {
     deleteGadgetCategory: async function (req, res) {
         try {
             const id = req.body.id;
-            const seller = req.seller;
+            // const seller = req.seller;
 
             const findGadget = await GadgetCategoryModel.findOne({ _id: id });
             if (!findGadget) {
@@ -807,10 +796,10 @@ const MobileController = {
             // console.log(findGadget.sellerId);
             // console.log(findGadget.sellerId);
             // console.log((findGadget.sellerId).toString() != (seller._id).toString())
-            if((findGadget.sellerId).toString() != (seller._id).toString()){
-                const response = { success: false, message: "You Not Eligable For Delete" };
-                return res.status(400).json(response);
-            }
+            // if((findGadget.sellerId).toString() != (seller._id).toString()){
+            //     const response = { success: false, message: "You Not Eligable For Delete" };
+            //     return res.status(400).json(response);
+            // }
 
             await GadgetCategoryModel.findByIdAndDelete({_id:findGadget._id});
 

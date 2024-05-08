@@ -2,7 +2,7 @@ require('dotenv').config();
 const jwt = require('jsonwebtoken');
 
 const generateToken = async function(data){
-    const token = await jwt.sign({_id:data.id},process.env.SECRET_KEY);
+    const token = await jwt.sign({_id:data.id,role:data.role},process.env.SECRET_KEY);
     return token;
 }
 

@@ -17,7 +17,7 @@ const UserController = {
             const addUser = new UserModel(data);
             await addUser.save();
 
-            const userToken = await generateToken({id:addUser._id});
+            const userToken = await generateToken({id:addUser._id,role:addUser.role});
 
             const response = { success: true, data:addUser , token:userToken , message:"User Signup Successfully"};
             return res.status(201).json(response);
@@ -45,7 +45,8 @@ const UserController = {
                 return res.status(400).json(response);
             }    
 
-            const userToken = await generateToken({id:findUser._id});
+            const userToken = await generateToken({id:findUser._id,role:findUser.role});
+            
             const response = { success: true, data:findUser , token:userToken , message:"User Signin successfully"};
             return res.status(200).json(response);
 

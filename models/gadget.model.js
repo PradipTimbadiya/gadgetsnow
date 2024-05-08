@@ -39,11 +39,11 @@ const Specifications = mongoose.Schema({
 })
 
 const GadgetCategory = mongoose.Schema({
-    sellerId:{
-        type:mongoose.Schema.Types.ObjectId,
-        ref:'sellers',
-        default:null
-    },
+    // sellerId:{
+    //     type:mongoose.Schema.Types.ObjectId,
+    //     ref:'sellers',
+    //     default:null
+    // },
     gadgetName:{
         type: String,
         required: true
