@@ -771,8 +771,6 @@ const MobileController = {
                 }
             }
 
-            
-
             const updatedGadget = await findGadget.save();
 
             const response = { success: true, data: updatedGadget, message: "Gadget Details" };

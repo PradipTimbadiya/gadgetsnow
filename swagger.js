@@ -300,7 +300,16 @@ module.exports=function swaggerDocs(app){
  *                  email:
  *                      type: string
  *                  password:
- *                      type: string        
+ *                      type: string   
+ *          createuser:
+ *              type: object
+ *              properties:
+ *                  userName:
+ *                      type: string
+ *                  email:
+ *                      type: string
+ *                  password:
+ *                      type: string     
  */
 
 
@@ -338,6 +347,24 @@ module.exports=function swaggerDocs(app){
  *              description: User Login Successfully
  */
 
+/**
+ * @swagger
+ * /api/v1/auth/create-user:
+ *  post:
+ *      security:
+ *          - bearerAuth: []
+ *      summary: create user by super admin
+ *      description: create user by super admin
+ *      requestBody:
+ *          required: true
+ *          content:
+ *              application/json:
+ *                  schema:
+ *                      $ref: '#components/schemas/createuser'
+ *      responses:
+ *          201:
+ *              description: User Created Successfully
+ */
 
 
 ///// ***** Review Schema ***** 
@@ -374,4 +401,177 @@ module.exports=function swaggerDocs(app){
  *      responses:
  *          201:
  *              description: Review Added Successfully
+ */
+
+
+///// ***** Role Schema *****
+/**
+ * @swagger
+ *  components:
+ *      securitySchemes:
+ *          bearerAuth:
+ *              type: http
+ *              scheme: Bearer
+ *              bearerFormat: JWT
+ *      schemas:
+ *          addrole:
+ *              type: object
+ *              properties:
+ *                  role:
+ *                      type: string
+ *                  permissions:
+ *                      type: array
+ *                      items:
+ *                          type: object
+ *                          properties:
+ *                              name: 
+ *                                  type: string
+ *                              route:
+ *                                  type: array
+ *                                  items:
+ *                                      type: string
+ *          updaterole:
+ *              type: object
+ *              properties:
+ *                  permissions:
+ *                      type: array
+ *                      items:
+ *                          type: object
+ *                          properties:
+ *                              name: 
+ *                                  type: string
+ *                              route:
+ *                                  type: array
+ *                                  items:
+ *                                      type: string
+ *          deletepermission:
+ *              type: object
+ *              properties:
+ *                  permissionName:
+ *                      type: string
+ *                  route:
+ *                      type: array
+ *                      items:
+ *                          type: string
+ */
+
+
+/**
+ * @swagger
+ * /api/v1/role/add-role:
+ *  post:
+ *      security:
+ *          - bearerAuth: []
+ *      summary: add role and permissions
+ *      description: add role and permissions
+ *      requestBody:
+ *          required: true
+ *          content:
+ *              application/json:
+ *                  schema:
+ *                      $ref: '#components/schemas/addrole'
+ *      responses:
+ *          201:
+ *              description: Role And Permissions Add Successfully
+ */
+
+/**
+ * @swagger
+ * /api/v1/role/getall-role:
+ *  get:
+ *      security:
+ *          - bearerAuth: []
+ *      summary: show all role and permission data
+ *      description: show all role and permission data
+ *      responses:
+ *          200:
+ *              description: all data
+ */
+
+/**
+ * @swagger
+ * /api/v1/role/getperticular-role/{id}:
+ *  get:
+ *      security:
+ *          - bearerAuth: []
+ *      summary: show perticular role data
+ *      description: show perticular role data
+ *      parameters:
+ *          - in: path
+ *            name: id
+ *            description: Search role
+ *            schema:
+ *                type: string 
+ *      responses:
+ *          200:
+ *              description: role data
+ */
+
+/**
+ * @swagger
+ * /api/v1/role/update-role/{id}:
+ *  put:
+ *      security:
+ *          - bearerAuth: []
+ *      summary: update role data
+ *      description: update role data
+ *      parameters:
+ *          - in: path
+ *            name: id
+ *            description: update role
+ *            schema:
+ *                type: string 
+ *      requestBody:
+ *          required: true
+ *          content:
+ *              application/json:
+ *                  schema:
+ *                      $ref: '#components/schemas/updaterole'
+ *      responses:
+ *          200:
+ *              description: updated role data
+ */
+
+/**
+ * @swagger
+ * /api/v1/role/delete-permission/{id}:
+ *  delete:
+ *      security:
+ *          - bearerAuth: []
+ *      summary: delete any permission of role data
+ *      description: delete any permission of role data
+ *      parameters:
+ *          - in: path
+ *            name: id
+ *            description: delete permission
+ *            schema:
+ *                type: string 
+ *      requestBody:
+ *          required: true
+ *          content:
+ *              application/json:
+ *                  schema:
+ *                      $ref: '#components/schemas/deletepermission'
+ *      responses:
+ *          200:
+ *              description: delete permission
+ */
+
+/**
+ * @swagger
+ * /api/v1/role/delete-role/{id}:
+ *  delete:
+ *      security:
+ *          - bearerAuth: []
+ *      summary: delete any role data
+ *      description: delete any role data
+ *      parameters:
+ *          - in: path
+ *            name: id
+ *            description: delete role
+ *            schema:
+ *                type: string 
+ *      responses:
+ *          200:
+ *              description: delete role
  */

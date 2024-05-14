@@ -2040,3 +2040,33 @@ other details(importer,manufacturer,country of origin,packer)
 //name(key)
 
 */
+
+/*
+ const permissions = [
+            "/gadget/find-gadget-category",
+            "/gadget/delete-gadget",
+            "/gadget/update-gadget",
+            "/gadget/create-gadget-category",
+            "/gadget/add-specification-incategory",
+            "/role/add-role",
+            "/role/getall-role",
+            "/role/getperticular-role",
+            "/role/update-role",
+            "/role/delete-role",
+            "/review/add-review",
+        ];
+
+        const findUser = await UserModel.findOne({ role: "Super Admin" });
+        if (!findUser) {
+            const createSuperAdmin = new UserModel({ userName: "super admin", email: "superadmin@gmail.com", password: "123", role: "Super Admin" })
+            await createSuperAdmin.save();
+        }
+
+        const findSuperAdmin = await RoleModel.findOne({ role: "Super Admin" });
+        if (findSuperAdmin) {
+            // console.log("Super Admin Already Exist");
+            const addSuperAdmin = await RoleModel.findOneAndUpdate({ role: "Super Admin" }, { role: "Super Admin", permissions: [{ name: "Manage All Route", route: permissions }] })
+            // await addSuperAdmin.save();
+        }
+
+*/

@@ -55,15 +55,6 @@ const verifyUser = async function(req,res,next){
             return res.status(400).json(response);
         }
 
-        // const findRole = await RoleModel.findOne({role:userData.role});
-        // if(!findRole)
-        // {
-        //     const response = { success: false , message: "Role"};
-        //     return res.status(400).json(response);
-        // }
-
-        // const route = req.originalUrl;
-        // console.log(route)
 
         const userId = userData._id;
         const findUser = await UserModel.findOne({_id:userId});
@@ -94,6 +85,14 @@ const authorization = async function(req,res,next){
         }
 
         const userData = await verifyToken(token);
+
+        const findSuperAdmin = await UserModel.findOne({_id:userData._id});
+
+        if(findSuperAdmin.is_super_admin === true)
+        {
+           return next();
+        }
+        
         if(!userData && !userData.role)
         {
             const response = { success: false , message: "Invalid Signature"};
@@ -107,9 +106,12 @@ const authorization = async function(req,res,next){
             return res.status(400).json(response);
         }
 
-        const route = req.originalUrl.split('/')[4];
+        const route = req.originalUrl.split('/v1')[1];
 
-        if (!userRole.permissions.includes(route)) {
+        const allRoute = userRole.permissions.flatMap(permission => permission.route);
+        
+        if(!allRoute.includes(route))
+        {
             const response = { success: false , message: "Permission Denied"};
             return res.status(403).json(response);
         }
@@ -136,7 +138,7 @@ const adminOnlyAccess = async function(req,res,next){
     try {
         const user = req.user;
 
-        if(user.role !== "Admin")
+        if(user.role !== "Admin" && user.is_super_admin == false)
         {
             const response = { success: false , message: "You're Not Eligable For Add Role And Permissions"};
             return res.status(400).json(response);

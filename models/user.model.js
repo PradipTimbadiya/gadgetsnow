@@ -1,14 +1,22 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
+const validator = require('validator');
 
 const User = mongoose.Schema({
     userName:{
         type:String,
         required:true
     },
-    email:{
-        type:String,
-        required:true
+    email: {
+        type: String,
+        required: [true, 'Email is mandatory'],
+        unique: [true, 'Email already registered'],
+        lowercase: true,
+        trim: true,
+        match: [
+          /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+          'Please fill in a valid email address',
+        ],
     },
     password:{
         type:String
@@ -19,8 +27,18 @@ const User = mongoose.Schema({
     },
     role:{
         type:String,
-        default:"User",
+        default: function() {
+            if (this.is_super_admin) {
+                return undefined; 
+            } else {
+                return "User";
+            }
+        },
         enum:["User","Admin"]
+    },
+    is_super_admin:{
+        type:Boolean,
+        default:false
     }
 },
 {

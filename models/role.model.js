@@ -1,16 +1,17 @@
 const mongoose = require('mongoose');
 
 const permissions = [
-    "find-gadget-category",
-    "delete-gadget",
-    "update-gadget",
-    "create-gadget-category",
-    "add-specification-incategory",
-    "add-role",
-    "getall-role",
-    "getperticular-role",
-    "update-role",
-    "delete-role"
+    "/gadget/find-gadget-category",
+    "/gadget/delete-gadget",
+    "/gadget/update-gadget",
+    "/gadget/create-gadget-category",
+    "/gadget/add-specification-incategory",
+    "/role/add-role",
+    "/role/getall-role",
+    "/role/getperticular-role",
+    "/role/update-role",
+    "/role/delete-role",
+    "/review/add-review"
 ];
 
 const roleSchema = new mongoose.Schema({
@@ -19,13 +20,14 @@ const roleSchema = new mongoose.Schema({
         required: true,
         unique: true
     },
-    permissions: {
-        type: [{
+    permissions: [{
+        name: String,
+        route: [{
             type: String,
-            enum: permissions
+            enum: permissions,
+            default: []
         }],
-        default: []
-    }
+    }]
 });
 
 const RoleModel = mongoose.model('Role', roleSchema);
